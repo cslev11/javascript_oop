@@ -1,61 +1,64 @@
-//Függvényes megoldás
-function Tanyer(szin, meret){
-    this.szin = szin;
-    this.meret = meret;
-}
-function NagyTanyer(szin){
-    Tanyer.call(this, szin, "nagy")
-}
-Object.setPrototypeOf(NagyTanyer.prototype, Tanyer.prototype);
+// Function
+console.log("---- Function ----");
 
-function KisTanyer(szin){
-    Tanyer.call(this, szin, "kis")
-}
-Object.setPrototypeOf(KisTanyer.prototype, Tanyer.prototype);
-
-const tanyer1 = new KisTanyer("lila");
-console.log(tanyer1);
-const tanyer2 = new KisTanyer("zöld");
-console.log(tanyer2);
-const tanyer3 = new NagyTanyer("réz");
-console.log(tanyer3);
-
-function Uveg(){
-
+function Plate(color, size) {
+    this.color = color;
+    this.size = size;
 }
 
-const uveg = new Uveg();
-console.log(uveg);
-
-//Osztályos megoldás
-
-class TanyerOsztaly{
-    constructor(szin, meret){
-        this.szin = szin;
-        this.meret = meret;
-    }
+function SmallPlate(color) {
+    Plate.call(this, color, "kicsi");
 }
-class NagyTanyerOsztaly extends TanyerOsztaly{
-    constructor(szin){
-        super(szin, "nagy")
-    }
+
+function LargePlate(color) {
+    Plate.call(this, color, "nagy");
 }
-class KisTanyerOsztaly extends TanyerOsztaly{
-    constructor(szin){
-        super(szin, "kis")
+
+Object.setPrototypeOf(SmallPlate.prototype, Plate.prototype);
+Object.setPrototypeOf(LargePlate.prototype, Plate.prototype);
+
+const plate1 = new SmallPlate("zöld");
+const plate2 = new SmallPlate("piros");
+const plate3 = new LargePlate("kék");
+console.log(plate1);
+console.log(plate2);
+console.log(plate3);
+
+function Glass() {}
+
+const glass1 = new Glass();
+console.log(glass1);
+
+// Class
+console.log("---- Class ----");
+
+class PlateClass {
+    constructor(color, size) {
+        this.color = color;
+        this.size = size;
     }
 }
 
-const classtanyer1 = new KisTanyerOsztaly("ezüst");
-console.log(classtanyer1);
-const classtanyer2 = new KisTanyerOsztaly("arany");
-console.log(classtanyer2);
-const classtanyer3 = new NagyTanyerOsztaly("fehér");
-console.log(classtanyer3);
-
-class UvegOsztaly {
-
+class SmallPlateClass extends PlateClass {
+    constructor(color) {
+        super(color, "kicsi");
+    }
 }
 
-const classuveg = new UvegOsztaly();
-console.log(classuveg);
+class LargePlateClass extends PlateClass {
+    constructor(color) {
+        super(color, "nagy");
+    }
+}
+
+const plate4 = new SmallPlateClass("zöld");
+const plate5 = new SmallPlateClass("piros");
+const plate6 = new LargePlateClass("kék");
+console.log(plate4);
+console.log(plate5);
+console.log(plate6);
+
+class GlassClass {}
+
+const glass2 = new GlassClass();
+console.log(glass2);

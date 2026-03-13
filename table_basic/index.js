@@ -2,9 +2,9 @@
  * @typedef {{author: string, title1: string, concepts1: string, title2?: string,  concepts2?: string}} RowspanRowType  
  * @typedef {{author: string, title: string, concepts: string, concepts2?: string}} ColspanRowType
  * @typedef {{name: string, colSpan?: number}} HeaderType
- * @callback RandomType
- * @callback RenderRowCallback
- * @param {HTMLSection}
+ * @callback RenderRowCallBack
+ * @param {HTMLTableSectionElement} RenderRowCallBack
+ * 
 */
 
 /** @type {HeaderType[]}  */
@@ -71,103 +71,86 @@ const colspanBodyArr = [
 // renderColspanBody(makeTableBodyWithHeader(colspanHeaderArr), colspanBodyArr)
 // renderRowspanBody(makeTableBodyWithHeader(rowspanHeaderArr), rowspanBodyArr)
 
-
-class Table{
+class Table {
     #tbody;
-    /** 
-     * @param {HeaderType[]} headerArr  
-    */
-    constructor(headerArr){
+    /**
+     * @param {HeaderType[]} headerArr 
+     */
+    constructor(headerArr) {
         this.#tbody = makeTableBodyWithHeader(headerArr);
     }
-    get tbody(){
+    get tbody() {
         return this.#tbody;
     }
-    appendRow(callback){
-        callback(this.#tbody)
+    /**
+     * @param {RenderRowCallBack} callback 
+     */
+    appendRow(callback) {
+        callback(this.#tbody);
     }
 }
-class ColspanTable extends Table{
-    constructor(headerArr){
+
+class ColSpanTable extends Table {
+    constructor(headerArr) {
         super(headerArr);
     }
-    /** 
-     * @param {ColspanRowType[]} bodyArr 
-    */
-    render(bodyArr){
+    /**
+     * @param {ColspanRowType[]} bodyArr
+     */
+    render(bodyArr) {
         renderColspanBody(this.tbody, bodyArr);
     }
 }
-class RowspanTable extends Table{
-    constructor(headerArr){
+
+class RowSpanTable extends Table {
+    constructor(headerArr) {
         super(headerArr);
     }
-    /** 
-     * @param {RowspanRowType[]} bodyArr 
-    */
-   render(bodyArr){
+    /**
+     * @param {RowspanRowType[]} bodyArr
+     */
+    render(bodyArr) {
         renderRowspanBody(this.tbody, bodyArr);
-   }
+    }
 }
 
-const colspan = new ColspanTable(colspanHeaderArr);
-colspan.render(colspanBodyArr);
+const colSpanTable = new ColSpanTable(colspanHeaderArr);
+colSpanTable.render(colspanBodyArr);
 
-const rowspan = new RowspanTable(rowspanHeaderArr);
-rowspan.render(rowspanBodyArr);
+const rowSpanTable = new RowSpanTable(rowspanHeaderArr);
+rowSpanTable.render(rowspanBodyArr);
 
-const button = document.createElement("button");
-button.innerText = "Rowspan hozzáadás";
+const button = document.createElement('button');
+button.innerText = "RowSpan Hozzáadás"
 document.body.appendChild(button);
 
-button.addEventListener("click", onClickButton.bind(rowspan));
+button.addEventListener('click', onClickButton.bind(rowSpanTable));
 
 /**
  * 
- * @this {Table} a táblázatpéldány
+ * @this {Table} a táblázatpéldány 
  */
-function onClickButton(e){
+function onClickButton(e) {
+    /** @type {RowspanRowType[]}  */
     const obj = {
-        author: "Appolliniare",
-        title1: "A megsebzett galamb és a szökőkút", 
-        concepts1: "képvers", 
-        title2: "Búcsú",
-        concepts2: "avantgárd" 
+        author: "Thomas Mann",
+        title: "Mario és a varázsló",
+        concepts: "kisregény" 
     }
-    this.appendRow(function(body){
-        const tr = document.createElement("tr");
+    this.appendRow(function(body) {
+        const tr = document.createElement('tr');
         body.appendChild(tr);
-        const td1 = document.createElement("td");
-        td1.innerText = obj.author;
-        tr.appendChild(td1);
-        const td2 = document.createElement("td");
-        td2.innerText = obj.title1;
-        tr.appendChild(td2);
-        const td3 = document.createElement("td");
-        td3.innerText = obj.concepts1;
-        tr.appendChild(td3);
-    })
-}
 
-function createButton(){
-    const obj = {
-        author: "Appolliniare",
-        title1: "A megsebzett galamb és a szökőkút", 
-        concepts1: "képvers", 
-        title2: "Búcsú",
-        concepts2: "avantgárd" 
-    }
-    rowspan.appendRow(function(body){
-        const tr = document.createElement("tr");
-        body.appendChild(tr);
-        const td1 = document.createElement("td");
+        const td1 = document.createElement('td');
         td1.innerText = obj.author;
         tr.appendChild(td1);
-        const td2 = document.createElement("td");
-        td2.innerText = obj.title1;
+
+        const td2 = document.createElement('td');
+        td2.innerText = obj.title;
         tr.appendChild(td2);
-        const td3 = document.createElement("td");
-        td3.innerText = obj.concepts1;
+
+        const td3 = document.createElement('td');
+        td3.innerText = obj.concepts;
         tr.appendChild(td3);
     })
 }
