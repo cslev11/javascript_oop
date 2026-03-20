@@ -1,5 +1,5 @@
 import { createTableHeader, createTableCell } from "./gomszab.min.js";
-import { ViewElement } from "./viewElement.js";
+import { ViewElement } from "./viewelement.js";
 import { AuthorManager } from "./manager.js"
 
 class TableView extends ViewElement {
